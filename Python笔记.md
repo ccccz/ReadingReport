@@ -16,11 +16,19 @@
 - chr(65)  >>  'A'
 - encode和decode方法
 - len()获取字符数或字节数
-- 格式化输出```'Hi, %s, you have $%d.' % ('Michael', 1000000)  >>  'Hi, Michael, you have $1000000.'```
+- 格式化输出
+```
+>>  'Hi, %s, you have $%d.' % ('Michael', 1000000)
+>>  'Hi, Michael, you have $1000000.'
+```
 - %d %f %s %x   整数 浮点数 字符串 十六进制数
 - %s会把任何数据类型转换为字符串
 - 使用%转义%，'%%'  >>  '%'
-- 也可以使用format进行格式化```'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)  >>  'Hello, 小明, 成绩提升了 17.1%'```
+- 也可以使用format进行格式化
+```
+>>  'Hello, {0}, 成绩提升了 {1:.1f}%'.format('小明', 17.125)  
+>>  'Hello, 小明, 成绩提升了 17.1%'
+```
 
 ## 集合/数组（list和tuple）
 #### list
@@ -36,13 +44,15 @@
 
 ## 条件
 1. 使用if，else和elif关键字
-2. 判断条件直接写，使用：（冒号）结尾，内部代码使用缩进``` if age >= 18:```
-```    print('adult')```
-```elif age >= 6:```
-```    print('teenager')```
-```else:```
-```    print('kid') ```
-
+2. 判断条件直接写，使用：（冒号）结尾，内部代码使用缩进
+``` python
+if age >= 18:
+   print('adult')
+elif age >= 6:
+   print('teenager')
+else:
+   print('kid')
+ ```
 ## 循环
 1. for循环形式``` for x in xs: ```
 2. range(n)函数虎生成一个从0开始到n-1的整数序列
@@ -68,8 +78,11 @@
 1. 内置类型转换函数int(),float(),str(),bool()
 2. 使用def语句定义函数```def 函数名（参数名）：函数内容```
 3. 空语句pass
-4. 检查传入的参数类型```if not isinstance(x, (int, float)):```
-```raise TypeError('bad operand type')```
+4. 检查传入的参数类型
+```python
+if not isinstance(x, (int, float)):
+   raise TypeError('bad operand type')
+```
 5. 返回多个值用逗号分割，实际上是一个tuple
 6. 默认/可选参数——在定义函数时给该参数一个默认值（age=2），该参数就变为可选参数
 7. 有默认参数时应按顺序输入，不过也可直接指定（age=4），此时不限制输入顺序（尤其是有多个默认参数时）
@@ -90,14 +103,77 @@
 
 #### 列表生成式
 1. 用于生成列表
-2. 可以是单层循环也可以是两层循环```[m + n for m in 'ABC' for n in 'XYZ']  >>  ['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']```
+2. 可以是单层循环也可以是两层循环
+```
+>>  [m + n for m in 'ABC' for n in 'XYZ']  
+>>  ['AX', 'AY', 'AZ', 'BX', 'BY', 'BZ', 'CX', 'CY', 'CZ']
+```
 3. 使用for···in···语句
 4. for可以使用不只一个变量```for k, v in d.items()```
 
 #### 生成器
-1. generator
+1. generator，不会在创建的时候一次性生成，而是会在循环的过程中不断生成
 2. 第一种创建方法——将列表生成式的[]换为()
 3. 是可迭代对象，可直接使用for循环
 4. 第二种创建方法——使用```yield```关键字
 5. 如果一个函数定义中包含yield关键字，那么这个函数就不再是一个普通函数，而是一个generator。
 6. 这里，最难理解的就是generator和函数的执行流程不一样。函数是顺序执行，遇到return语句或者最后一行函数语句就返回。而变成generator的函数，在每次调用next()的时候执行，遇到yield语句返回，再次执行时从上次返回的yield语句处继续执行。
+
+#### 迭代器
+1. 可以直接作用于for循环的数据类型统称为可迭代对象iterable
+2. 可以被next()函数调用并不断返回下一个值的对象成为迭代器iterator
+3. 可以使用isinstance()函数来判断是否为可迭代对象或是否为迭代器
+4. 可以使用iter()函数从iterable类型的对象获得iterator对象
+5. 迭代器(iterator)是一个数据流，是不能提前知道序列长度的有序序列，属于惰性计算。
+
+
+## 函数式编程
+1. 函数本身也可以赋给变量（赋值时只使用函数名，没有括号），这样变量就变成了一个函数
+2. 变量可以指向函数，那么函数就可以作为另一个函数的参数（要求同上），产生所谓高阶函数
+3. `map()`函数接受两个参数，一个是函数，一个是可迭代对象，map函数将传入的函数作用到可迭代对象的每个元素，并将结果作为iterator返回。
+4. `reduce()`函数也接受两个参数，一个是函数（这个函数一定是必须接受两个参数的），一个是序列，reduce函数是将序列的第一个元素与第二个元素先做计算，然后将结果与第三个元素计算，持续进行直至最后一个元素，返回结果。
+5. `filter()`函数用于过滤序列。filter()也接受两个参数，一个是函数，一个是可迭代对象，并将函数一次作用于每个元素，根据返回值是False还是True决定是丢弃还是保留该元素，并将结果作为iterator返回。
+6. `sorted()`函数可以对list进行排序
+7. sorted()函数还可以接收一个key函数，并将指定函数作用于list的每个元素上，根据key函数返回的结果进行排序
+8. sorted()函数反向排序使用`reverse=True`实现
+9. `返回函数`——将函数作为返回值返回，并且这个函数不会立即执行，会在再次调用时执行
+10. `闭包`——相关参数和变量都保存在返回的函数中
+11. `匿名函数`——不需要显式定义的函数
+12. 关键字`lambda`表示匿名函数，冒汗前面的表示函数参数
+
+##### 装饰器
+- 不修改函数的定义，又可以在代码运行期间动态增加功能的方式，称之为`装饰器(decorator)`
+- 本质上是一个返回函数的高阶函数。将待装饰的函数作为参数传入，将这个函数名作为标签至于函数定义前（@function）
+- 不带参数的装饰器
+```python
+import functools
+
+def log(func):
+    @functools.wraps(func)
+    def wrapper(*args, **kw):
+        print('call %s():' % func.__name__)
+        return func(*args, **kw)
+    return wrapper
+
+@log
+def functionA(): 
+##相当于functionA=log(functionA)
+``` 
+- 带参数的装饰器
+```python
+import functools
+
+def log(text):
+   def decorator(func):
+      @functools.wrap(func)
+      def wrapper(*args,**kw):
+         print('%s  %s():' %(text, func.__name__))
+         return func(*args, **kw)
+      return wrapper
+   return decorator
+```
+
+##### 偏函数
+- 目的是将一个函数的某些参数值固定住（设置新的默认值），形成新的函数
+-使用`functools.partial()`函数实现
+
