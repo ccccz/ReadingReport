@@ -60,7 +60,7 @@ else:
 4. break和continue语句可使用
 
 ## 字典dict(map)和集合set
-1. 形式``` {'Michael': 95, 'Bob': 75, 'Tracy': 85}```使用大括号和逗号分隔，调用时使用中括号
+1. 形式``` {'Michael': 95, 'Bob': 75, 'Tracy': 85}```使用大括号和逗号分隔，调用时使用中括号，添加键值对是也直接使用中括号。关键词`dict`
 2. 可以使用get(key)方法获取value或指定value（两个参数）
 3. 使用pop(key)方法删除
 > list和dict比较          
@@ -73,6 +73,9 @@ else:
 
 4. 形式```set([2, 3, 4])```
 5. set是无序的，不重复的，可以做交集（&），并集（|）等操作
+6. set也是使用大括号的{}，新建集合时使用set()而不是{}（新建了字典）
+7. 使用.add()方法添加元素，.update()也可
+8. 使用.remove()（删除不存在的元素会报错）删除元素，或.discard()（不会报错）
 
 ## 函数
 1. 内置类型转换函数int(),float(),str(),bool()
@@ -177,3 +180,23 @@ def log(text):
 - 目的是将一个函数的某些参数值固定住（设置新的默认值），形成新的函数
 -使用`functools.partial()`函数实现
 
+
+## datetime模块
+> datetime主要分为date,time,datetime,timedelta四个模块
+
+### datetime
+- `strptime(time_str,form_str)`——用于将指定格式日期字符串转换为datetime对象
+- `strftime(form_str)`——用于指定格式输出
+- 可以进行加减法和大小比较，基于时间戳。减法结果为timedetla对象
+
+### date
+- 直接使用`date(Y_int,m_int,d_int)`来指定日期
+- `timetuple()`——获取date的struct_time对象，格式为元组
+
+
+## 正则表达式
+- `re.complie(pattern)`——将正则表达式模式编译成一个正则表达式对象
+- `re.match([pattern,]string)`——在字符串首部进行匹配，匹配不到则返回none，返回一个可以使用span()的对象
+- `re.search([pattern,]string)`——对整个字符创进行匹配，匹配不到返回none，同上
+- `re.sub（pattern,repl,string[,count,flags]）`——对于输入的一个字符串，利用正则表达式，实现祖父穿替换处理，返回被替换后的字符串。`pattern`是正则表达式对象，`repl`是被替换的策略，可以是字符串，也可以是对被匹配到的字符串的处理函数，主义传输过去的是特殊对象，可以使用group的那种，`string`是原字符串，`count`是处理匹配字符串个数
+- `re.findall(pattern,string)`——查找所有匹配，返回一个列表
